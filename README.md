@@ -1,4 +1,4 @@
-# NHS Digital Tech Task
+# Digital Tech Task
 
 The following is a write up of the test; and it's results; It's written in markdown so may require a markdown viewer to properly review;
 
