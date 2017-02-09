@@ -100,7 +100,7 @@ class PostcodeImporter:
 # Default behaviour when run from command line
 if __name__ == '__main__':
 
-    start = time.time();
+    start = time.time()
 
     # Create a new importer
     importer = PostcodeImporter()
@@ -115,6 +115,6 @@ if __name__ == '__main__':
         # Show usage
         print("usage: python -m src.postcode_importer [input.gz]")
 
-    end = time.time();
+    end = time.time()
 
     print("Time taken:", end-start, " seconds")

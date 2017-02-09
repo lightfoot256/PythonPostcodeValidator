@@ -2,22 +2,21 @@
 
 """ Optimised Postcode validator; uses regular expression to validate postcodes via the match function """
 
-import re
-
+# Function names with invalid casing left to show resemblance to original RegEx queries
 
 class PostcodeValidatorWithoutRegex:
 
     @staticmethod
     def match_number(c):
-        return c >= '0' and c <= '9'
+        return '0' <= c <= '9'
 
     @staticmethod
     def match_AtoPRtoUWYZ(c):
-        return (c >= 'A' and c <='Z') and c != 'Q' and c != 'V' and c != 'X'
+        return ('A' <= c <= 'Z') and c != 'Q' and c != 'V' and c != 'X'
 
     @staticmethod
     def match_AtoHKtoY(c):
-        return (c >= 'A' and c <='Z') and c != 'I' and c != 'J' and c != 'Z'
+        return (c >= 'A' and c <= 'Z') and c != 'I' and c != 'J' and c != 'Z'
 
     @staticmethod
     def match_AtoHJKPSTUW(c):
@@ -80,7 +79,7 @@ class PostcodeValidatorWithoutRegex:
 
     def match(self, postcode):
 
-        if( self.match_AtoPRtoUWYZ(postcode[0])):
+        if self.match_AtoPRtoUWYZ(postcode[0]):
             if self.match_number(postcode[1]):
 
                 # A99
@@ -115,4 +114,4 @@ class PostcodeValidatorWithoutRegex:
         if postcode[0:3] == 'GIR':
             return self.match_suffix(postcode[3:])
 
-        return False;
+        return False

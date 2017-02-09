@@ -158,7 +158,7 @@ Removing the print function yields a 60% reduction in speed as noted by the prof
 
 ### Re-writing the validator in "code"
 
-As an exercise in proving how efficient the compiled regex is; I wrote some code that matches the postcodes enough to pass the 16 existing tests and ran it through the same input data;
+As an exercise in proving how efficient the compiled regex is; I wrote some [code](src/postcode_validator_without_regex.py) that matches the postcodes enough to pass the 16 existing [tests](tests/postcode_validator_without_regex_test.py) and ran it through the same input data;
 
 The results are shown [Here](WITHOUT_REGEX_CPROFILE.md)
 

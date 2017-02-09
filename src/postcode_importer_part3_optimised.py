@@ -6,9 +6,8 @@ import time
 import csv
 import gzip
 import sys
-import cProfile
 
-from src.postcode_validator_without_regex import PostcodeValidatorWithoutRegex
+from src.postcode_validator import PostcodeValidator
 
 
 class PostcodeImporterOptimised:
@@ -30,7 +29,7 @@ class PostcodeImporterOptimised:
         output invalid postcodes to the failed_validation.csv """
 
         # Create the validator to be used against all post codes
-        validator = PostcodeValidatorWithoutRegex()
+        validator = PostcodeValidator()
 
         # Initialise a list to hold the valid items
         valid_items = {}
@@ -98,7 +97,7 @@ class PostcodeImporterOptimised:
 # Default behaviour when run from command line
 if __name__ == '__main__':
 
-    start = time.time();
+    start = time.time()
 
     # Create a new importer
     importer = PostcodeImporterOptimised()
@@ -107,12 +106,12 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
 
         # Begin import using second argument (first is command)
-        cProfile.run("importer.do_import(sys.argv[1])")
+        importer.do_import(sys.argv[1])
     else:
 
         # Show usage
         print("usage: python -m src.postcode_importer [input.gz]")
 
-    end = time.time();
+    end = time.time()
 
     print("Time taken:", end-start, " seconds")
