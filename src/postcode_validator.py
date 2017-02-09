@@ -32,4 +32,6 @@ class PostcodeValidator:
 
     def match(self, postcode):
 
+        """ Return the result of regex match against the given postcode """
+
         return self.compare.match(postcode)

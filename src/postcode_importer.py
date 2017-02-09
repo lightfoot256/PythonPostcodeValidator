@@ -9,10 +9,16 @@ class PostcodeImporter:
 
     # The index in the source csv of the column for row id
     import_column_row_id = 0
+
+    # The index in the source csv of the column for row id
     import_column_postcode = 1
+
+    # The filename to output failed postcodes to
     output_file = "failed_validation.csv"
 
-    def do_import(self, from_file):
+    def do_import(self, import_file):
+        """ Run the validation against lines in the import file,
+        output invalid postcodes to the failed_validation.csv """
 
         # Create the validator to be used against all post codes
         validator = PostcodeValidator()
@@ -27,7 +33,7 @@ class PostcodeImporter:
             writer.writerow(["row_id", "postcode"])
 
             # Using gzip; open the given file (read text, not append)
-            with gzip.open(from_file, mode="rt") as f:
+            with gzip.open(import_file, mode="rt") as f:
 
                 # Get the csv reader for the unzipped file
                 reader = csv.reader(f)
@@ -58,7 +64,7 @@ if __name__ == '__main__':
     importer = PostcodeImporter()
 
     # Make sure we have an argument (1 for the command, 1 for the file to import
-    if( len(sys.argv) == 2):
+    if len(sys.argv) == 2:
 
         # Begin import using second argument (first is command)
         importer.do_import(sys.argv[1])

@@ -1,6 +1,7 @@
 import unittest
 
-from ..src import PostcodeValidator
+from src.postcode_validator import PostcodeValidator
+
 
 class PostcodeValidationTest(unittest.TestCase):
 

@@ -8,15 +8,17 @@ They can be run from the command line as follows:
 
 ### Part 1
 
->     $ python -m unittest src
+>     $ python -m tests.postcode_validator_test
 
 ### Part 2
 
->     $ python src/postcode_importer.py
+Given the import csv; taken from: [Google drive](https://drive.google.com/file/d/0BwxZ38NLOGvoTFE4X19VVGJ5NEk/view?usp=sharing) and placed in the data directory; you could run the import:
+
+>     $ python -m src.postcode_importer data\import_data.csv.gz
 
 ### Part 3
 
->     $ python src/postcode_importer_part3.py
+>     $ python -m src.postcode_importer_part3 data\import_data.csv.gz
 
 ----
 ## changelog

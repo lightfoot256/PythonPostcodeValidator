@@ -189,3 +189,7 @@ Performance
   * Alternatively use threads to pull lines from the CSVs and split into chunks of work that can be executed concurrently (since the items are unrelated); Once the items are sorted into valid/invalid they can be concatenated back together and sorted based on row_id
    * Instead of using a regular expression write the equivelant code to check the format; this should execute quicker than whatever the "compiled" version of the regex library can produce
    * Switch to using C/C++ since the rules are relatively simple
+
+---
+## changelog
+* 08-Feb-2017 Moved analysis notes from README.md
