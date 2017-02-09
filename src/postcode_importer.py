@@ -1,45 +1,68 @@
-
-import gzip
 import csv
+import gzip
+import sys
 
 from src.postcode_validator import PostcodeValidator
 
+
 class PostcodeImporter:
 
-    importFile = "../data/import_data.csv.gz"
-    importColumnRowId = 0
-    importColumnPostCode = 1
+    # The index in the source csv of the column for row id
+    import_column_row_id = 0
+    import_column_postcode = 1
+    output_file = "failed_validation.csv"
 
-    outputFile = "failed_validation.csv"
+    def do_import(self, from_file):
 
-    def Import(self):
-
+        # Create the validator to be used against all post codes
         validator = PostcodeValidator()
 
-        with open(self.outputFile, "wt") as output:
+        # Open the output file for writing invalid post codes to
+        with open(self.output_file, "wt") as output:
+
+            # Create the CSV writer against the output file
             writer = csv.writer(output, delimiter=' ')
+
+            # Write the CSV header row
             writer.writerow(["row_id", "postcode"])
 
-            with gzip.open(self.importFile, mode="rt") as f:
+            # Using gzip; open the given file (read text, not append)
+            with gzip.open(from_file, mode="rt") as f:
 
+                # Get the csv reader for the unzipped file
                 reader = csv.reader(f)
-                next(reader, None) # Skip header
 
+                # Skip the first line which is the header row
+                next(reader, None)
+
+                # Iterate over each line in the source file
                 for line in reader:
 
-                    rowId = line[self.importColumnRowId]
-                    postcode = line[self.importColumnPostCode]
+                    # Get the row_id and postcode fields from each line
+                    row_id = line[self.import_column_row_id]
+                    postcode = line[self.import_column_postcode]
 
-                    if not(validator.Match(postcode)):
+                    # Validate the postcode
+                    if not(validator.match(postcode)):
 
-                        print("Failed to import :", rowId, " (invalid postcode: ", postcode , ")");
+                        # Report on invalid post codes
+                        print("Failed to import :", row_id, " (invalid postcode: ", postcode, ")")
 
-                        writer.writerow([rowId, postcode])
+                        # Write to the failed output
+                        writer.writerow([row_id, postcode])
 
-
+# Default behaviour when run from command line
 if __name__ == '__main__':
 
+    # Create a new importer
     importer = PostcodeImporter()
 
-    importer.Import()
+    # Make sure we have an argument (1 for the command, 1 for the file to import
+    if( len(sys.argv) == 2):
 
+        # Begin import using second argument (first is command)
+        importer.do_import(sys.argv[1])
+    else:
+
+        # Show usage
+        print("usage: python -m src.postcode_importer [input.gz]")

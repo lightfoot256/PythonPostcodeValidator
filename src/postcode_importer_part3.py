@@ -1,9 +1,9 @@
-
-import gzip
-import csv
 import cProfile
+import csv
+import gzip
 
-from src.postcode_validator import PostcodeValidator
+from postcode_validator import PostcodeValidator
+
 
 class PostcodeImporter:
 

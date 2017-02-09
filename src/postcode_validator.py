@@ -1,6 +1,7 @@
 
 import re
 
+
 class PostcodeValidator:
 
     def __init__(self):
@@ -29,7 +30,6 @@ class PostcodeValidator:
 
         self.compare = re.compile(pattern, re.X)
 
-    def Match(self, postcode):
+    def match(self, postcode):
 
-        return self.compare.match(postcode);
-
+        return self.compare.match(postcode)
