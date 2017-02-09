@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+
+""" Postcode importer; run against data file, reports invalid post codes and writes to output CSV """
+
 import csv
 import gzip
 import sys
@@ -45,7 +49,7 @@ class PostcodeImporter:
                 for line in reader:
 
                     # Get the row_id and postcode fields from each line
-                    row_id = line[self.import_column_row_id]
+                    row_id = int(line[self.import_column_row_id])
                     postcode = line[self.import_column_postcode]
 
                     # Validate the postcode

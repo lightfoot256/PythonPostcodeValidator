@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+""" Postcode validator; uses regular expression to validate postcodes via the match function """
 
 import re
 

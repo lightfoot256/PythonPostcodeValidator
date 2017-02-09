@@ -143,52 +143,24 @@ A review of the regular expression was carried out:
 
 > This is not covered by the regular expression
 
-## Part 2 - Bulk Import
 
-The specification:
+# Performance
 
-* Validate postcodes in the data file
-* Report on the row_id where validation fails
-* Untar the file if required (using gzip)
-* At end of running import; produce file named 'failed_validation.csv' with same columns as above
+## Measurement
 
-Review the attached source in:
+* Running cProfile against the import script shows a total time of about 22 seconds; See [output](UNOPTIMISED_CPROFILE.md)
+* 12 seconds (60%) of this time is spent "reporting" the failed results to the console
 
->     ./src/postcode_importer_.py
+## Optimisations
+### Removing the output 
 
-Summary
+Removing the print function yields a 60% reduction in speed as noted by the profiler [output](OPTIMISED_CPROFILE.md)
 
-* Creates validator with compiled regular expression
-* Opens output immediately to avoid keeping large data set in memory while processing
-* Uses GZip to read file
-* Skips first line to avoid header
-* Prints (reports) rowId and postcode when failed validation to the console
+### Re-writing the validator in "code"
 
-## Part 3 - Performance engineering
+As an exercise in proving how efficient the compiled regex is; I wrote some code that matches the postcodes enough to pass the 16 existing tests and ran it through the same input data;
 
-
-Specification:
-
-* Modifyto produce success file
-* Order the output
-
-Review the attached source in:
-
->     ./src/postcode_importer_part3.py
-
-Summary
-
-* In memory dictionary is used to process the data; this uses more memory but allows us to sort the entire list at the end before we write it out -- to avoid use of memory we could read and write a single line at a line and insert the line into the output at the appropriate location - however this would be extremely slow so wasn't even attempted since a memory constraint wasn't given
-* Dictionary keys are sorted during iteration and items are looked up based on sorted Key; An OrderedDictionary wasn't used since we don't care about insertion order here
-
-Performance
-
-* I began using cProfile to monitor the profile results; but ran out of time to optimise the solution, however the following ideas would be useful to explore:
-  * Pre-sort the list so the files can be written without keeping in-memory lists
-  * Most of the work appears to be disk bound reading and writing the files - so reading the entire files into memory at once to avoid delays between reading lines may help
-  * Alternatively use threads to pull lines from the CSVs and split into chunks of work that can be executed concurrently (since the items are unrelated); Once the items are sorted into valid/invalid they can be concatenated back together and sorted based on row_id
-   * Instead of using a regular expression write the equivelant code to check the format; this should execute quicker than whatever the "compiled" version of the regex library can produce
-   * Switch to using C/C++ since the rules are relatively simple
+The results are shown [Here](WITHOUT_REGEX_CPROFILE.md)
 
 ---
 ## changelog

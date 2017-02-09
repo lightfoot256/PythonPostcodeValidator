@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+
+""" Postcode validation tests """
+
 import unittest
 
 from src.postcode_validator import PostcodeValidator
